@@ -1,0 +1,33 @@
+{
+  "name": "bs-revamp",
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "watch": "bsb -make-world -w",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "keywords": [
+    "BuckleScript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "1.8.3",
+    "bs-jest": "^0.1.0",
+    "bs-loader": "^1.5.12"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "re",
+      "js",
+      "ml"
+    ],
+    "testMatch": [
+      "**/__tests__/*_test.re"
+    ],
+    "transform": {
+      ".(re|ml)": "bs-loader"
+    }
+  }
+}
