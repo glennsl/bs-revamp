@@ -18,3 +18,9 @@ let rec map f seq =>
   | Cons element next =>
     fun () => Cons (f element) (map f next);
   };
+
+let count seq => {
+  let n = ref 0;
+  seq |> forEach (fun _ => n := !n + 1);
+  !n
+};
