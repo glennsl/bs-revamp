@@ -11,3 +11,10 @@ let rec forEach f seq =>
     f element;
     forEach f next
   };
+
+let rec map f seq =>
+  switch (seq ()) {
+  | Nil => fun () => Nil
+  | Cons element next =>
+    fun () => Cons (f element) (map f next);
+  };
