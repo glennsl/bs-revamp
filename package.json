@@ -5,8 +5,9 @@
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
-    "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test": "npm run build 6& jest",
+    "test:watch": "jest --watchAll",
+    "bench": "npm run build && node lib/js/__bench__/bench.js"
   },
   "keywords": [
     "BuckleScript"
@@ -15,7 +16,8 @@
   "devDependencies": {
     "bs-platform": "1.8.3",
     "bs-jest": "^0.1.0",
-    "bs-loader": "^1.5.12"
+    "bs-loader": "^1.5.12",
+    "bs-benchmarkjs": "glennsl/bs-benchmarkjs"
   },
   "jest": {
     "moduleFileExtensions": [
