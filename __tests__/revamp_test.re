@@ -1,4 +1,3 @@
-
 open Jest;
 open Expect;
 
@@ -13,12 +12,13 @@ describe "compile" (fun () => {
 describe "forEach" (fun () => {
   let run input => {
     let results = [||];
-    Revamp.forEach (fun m i _ => Js.Array.push (m, i) results) input re;
+    re |> Revamp.matches input
+       |> Sequence.forEach (fun m => Js.Array.push m results);
     results
   };
 
   test "match" (fun () =>
-    expect (run "bananas") |> toEqual [|("na", 2), ("na", 4)|]);
+    expect (run "bananas") |> toEqual [|"na", "na"|]);
 
   test "no match" (fun () =>
     expect (run "apples") |> toEqual [||]);

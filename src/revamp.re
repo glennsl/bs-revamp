@@ -38,31 +38,44 @@ let compile ::flags=[] pattern => {
   Js.Re.fromStringWithFlags pattern flags::flags
 };
 
-let forEach f input re => {
+let exec input re => {
   _assertValid re;
-  let rec loop () =>
+  let rec next start () => {
+    _setLastIndex re start;
     switch (re |> Js.Re.exec input) {
-    | None => ()
-    | Some result =>
-      let matches = Js.Re.matches result;
-      let index = Js.Re.index result;
-      f matches.(0) index matches;
-      loop ()
-    };
-  loop ()
+      | None => Sequence.Nil
+      | Some result => {
+        let nextIndex = Js.Re.lastIndex re;
+        _reset re;
+        Sequence.Cons result (next nextIndex)
+      }
+    }
+  };
+  next 0
 };
+
+let matches input re =>
+  re |> exec input
+     |> Sequence.map
+          (fun result =>
+            Array.unsafe_get (result |> Js.Re.matches) 0);
+
+let indices input re =>
+  re |> exec input
+     |> Sequence.map Js.Re.index;
+
+let captures input re =>
+  re |> exec input
+     |> Sequence.map
+          (fun result =>
+            result |> Js.Re.matches
+                   |> Js.Array.sliceFrom 1);
+
 let test input re => {
   _assertValid re;
   let res = Js.Re.test input re;
   _reset re;
   res
-};
-
-let count input re => {
-  _assertValid re;
-  let n = ref 0;
-  forEach (fun _ _ _ => n := !n + 1) input re;
-  !n
 };
 
 let find input re => {
@@ -76,6 +89,9 @@ let find input re => {
     Some (matches.(0), index, matches)
   }
 };
+
+let count input re =>
+  exec input re |> Sequence.count;
 /*
 let replace f input re =>
   _replace re f input;
