@@ -24,3 +24,10 @@ let count seq => {
   seq |> forEach (fun _ => n := !n + 1);
   !n
 };
+
+let rec toList seq =>
+  switch (seq ()) {
+  | Nil => []
+  | Cons element next =>
+    [element, ...toList next]
+  }
