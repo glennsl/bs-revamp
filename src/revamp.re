@@ -1,8 +1,6 @@
 
-type re = Js.Re.t;
-
-external _setLastIndex : re => int => unit = "lastIndex" [@@bs.set];
-external _replace : re => (string => string) => string = "replace" [@@bs.send.pipe: string];
+external _setLastIndex : Js.Re.t => int => unit = "lastIndex" [@@bs.set];
+external _replace : Js.Re.t => (string => string) => string = "replace" [@@bs.send.pipe: string];
 
 type flags =
 | IgnoreCase
@@ -28,13 +26,19 @@ let _reset re => {
   _setLastIndex re 0
 };
 
+module Result = {
+  type t = Js.Re.result;
+};
+
 module Compiled = {
+  type t = Js.Re.t;
+
   let make ::flags=[] pattern => {
     let flags = flags
       |> List.map _flagToString
       |> List.fold_left (fun acc flag => acc ^ flag) "g";
     
-    Js.Re.fromStringWithFlags pattern flags::flags
+    Js.Re.fromStringWithFlags pattern ::flags
   };
 
   let exec re input => {
