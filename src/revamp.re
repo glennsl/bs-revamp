@@ -1,6 +1,5 @@
 
 type re = Js.Re.t;
-type captures = array string;
 
 external _setLastIndex : re => int => unit = "lastIndex" [@@bs.set];
 external _replace : re => (string => string) => string = "replace" [@@bs.send.pipe: string];
@@ -29,90 +28,123 @@ let _reset re => {
   _setLastIndex re 0
 };
 
+module Compiled = {
+  let make ::flags=[] pattern => {
+    let flags = flags
+      |> List.map _flagToString
+      |> List.fold_left (fun acc flag => acc ^ flag) "g";
+    
+    Js.Re.fromStringWithFlags pattern flags::flags
+  };
 
-let compile ::flags=[] pattern => {
-  let flags = flags
-    |> List.map _flagToString
-    |> List.fold_left (fun acc flag => acc ^ flag) "g";
-  
-  Js.Re.fromStringWithFlags pattern flags::flags
-};
-
-let exec input re => {
-  _assertValid re;
-  let rec next start () => {
-    _setLastIndex re start;
-    switch (re |> Js.Re.exec input) {
-      | None => Sequence.Nil
-      | Some result => {
-        let nextIndex = Js.Re.lastIndex re;
-        _reset re;
-        Sequence.Cons result (next nextIndex)
+  let exec re input => {
+    _assertValid re;
+    let rec next start () => {
+      _setLastIndex re start;
+      switch (re |> Js.Re.exec input) {
+        | None => Sequence.Nil
+        | Some result => {
+          let nextIndex = Js.Re.lastIndex re;
+          _reset re;
+          Sequence.Cons result (next nextIndex)
+        }
       }
+    };
+    next 0
+  };
+
+  let matches re input =>
+    input |> exec re
+          |> Sequence.map
+                (fun result =>
+                  Array.unsafe_get (result |> Js.Re.matches) 0
+                );
+
+  let indices re input =>
+    input |> exec re
+          |> Sequence.map
+                (fun result => {
+                  let index = Js.Re.index result;
+                  let match_ = Array.unsafe_get (Js.Re.matches result) 0;
+                  (index, index + Js.String.length match_)
+                });
+
+  let captures re input =>
+    input |> exec re
+          |> Sequence.map
+                (fun result =>
+                  result |> Js.Re.matches
+                        |> Js.Array.sliceFrom 1
+                );
+
+  let test re input => {
+    _assertValid re;
+    let res = Js.Re.test input re;
+    _reset re;
+    res
+  };
+
+  let find re input => {
+    _assertValid re;
+    switch (re |> Js.Re.exec input) {
+    | None => None
+    | Some result =>
+      _reset re;
+      let matches = Js.Re.matches result;
+      Some matches.(0)
     }
   };
-  next 0
+
+  let findIndex re input => {
+    _assertValid re;
+    switch (re |> Js.Re.exec input) {
+    | None => None
+    | Some result =>
+      _reset re;
+      let matches = Js.Re.matches result;
+      let index = Js.Re.index result;
+      Some (index, index + (Js.String.length matches.(0)))
+    }
+  };
+
+  let count re input =>
+    input |> exec re
+          |> Sequence.count;
+
+  let replace re f input =>
+    _replace re f input;
+
+  let split re input =>
+    Js.String.splitByRe re input
+
 };
 
-let matches input re =>
-  re |> exec input
-     |> Sequence.map
-          (fun result =>
-            Array.unsafe_get (result |> Js.Re.matches) 0
-          );
+let exec pattern ::flags=[] input =>
+  Compiled.exec (Compiled.make ::flags pattern) input;
 
-let indices input re =>
-  re |> exec input
-     |> Sequence.map
-          (fun result => {
-            let index = Js.Re.index result;
-            let match_ = Array.unsafe_get (Js.Re.matches result) 0;
-            (index, index + Js.String.length match_)
-          });
+let matches pattern ::flags=[] input =>
+  Compiled.matches (Compiled.make ::flags pattern) input;
 
-let captures input re =>
-  re |> exec input
-     |> Sequence.map
-          (fun result =>
-            result |> Js.Re.matches
-                   |> Js.Array.sliceFrom 1
-          );
+let indices pattern ::flags=[] input =>
+  Compiled.indices (Compiled.make ::flags pattern) input;
 
-let test input re => {
-  _assertValid re;
-  let res = Js.Re.test input re;
-  _reset re;
-  res
-};
+let captures pattern ::flags=[] input =>
+  Compiled.captures (Compiled.make ::flags pattern) input;
 
-let find input re => {
-  _assertValid re;
-  switch (re |> Js.Re.exec input) {
-  | None => None
-  | Some result =>
-    _reset re;
-    let matches = Js.Re.matches result;
-    Some matches.(0)
-  }
-};
+let test pattern ::flags=[] input =>
+  Compiled.test (Compiled.make ::flags pattern) input;
 
-let findIndex input re => {
-  _assertValid re;
-  switch (re |> Js.Re.exec input) {
-  | None => None
-  | Some result =>
-    _reset re;
-    let matches = Js.Re.matches result;
-    let index = Js.Re.index result;
-    Some (index, index + (Js.String.length matches.(0)))
-  }
-};
+let find pattern ::flags=[] input =>
+  Compiled.find (Compiled.make ::flags pattern) input;
 
-let count input re =>
-  exec input re |> Sequence.count;
+let findIndex pattern ::flags=[] input =>
+  Compiled.findIndex (Compiled.make ::flags pattern) input;
 
-let replace f input re =>
-  _replace re f input;
+let count pattern ::flags=[] input =>
+  Compiled.count (Compiled.make ::flags pattern) input;
 
-let split input re =>
-  Js.String.splitByRe re input
+let replace pattern ::flags=[] f input =>
+  Compiled.replace (Compiled.make ::flags pattern) f input;
+
+let split pattern ::flags=[] input =>
+  Compiled.split (Compiled.make ::flags pattern) input;

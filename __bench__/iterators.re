@@ -1,4 +1,4 @@
-let re = Revamp.compile "(na)+";
+let re = Revamp.Compiled.make "(na)+";
 
 module Seq = {
   open Sequence;
