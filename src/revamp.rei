@@ -3,7 +3,7 @@ type flags =
 | MultiLine
 | Unicode;
 
-module Result : {
+module Match : {
   type t;
 
   /* TODO: implement better API */  
@@ -16,7 +16,7 @@ module Compiled : {
   type t;
 
   let make : flags::list flags? => string => t;
-  let exec : t => string =>  Sequence.t Result.t;
+  let exec : t => string =>  Sequence.t Match.t;
   let matches : t => string => Sequence.t string;
   let indices : t => string => Sequence.t (int, int);
   let captures : t => string => Sequence.t (array string); /* TODO: should be list string? */
@@ -29,7 +29,7 @@ module Compiled : {
   let split : t => string => array string; /* TODO: should be list string? */
 };
 
-let exec : string => flags::list flags? => string =>  Sequence.t Result.t;
+let exec : string => flags::list flags? => string =>  Sequence.t Match.t;
 let matches : string => flags::list flags? => string => Sequence.t string;
 let indices : string => flags::list flags? => string => Sequence.t (int, int);
 let captures : string => flags::list flags? => string => Sequence.t (array string);

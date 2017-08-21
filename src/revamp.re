@@ -26,7 +26,7 @@ let _reset re => {
   _setLastIndex re 0
 };
 
-module Result = {
+module Match = {
   type t = Js.Re.result;
 
   let matches = Js.Re.matches;
@@ -127,7 +127,6 @@ module Compiled = {
 
   let split re input =>
     Js.String.splitByRe re input
-
 };
 
 let exec pattern ::flags=[] input =>
