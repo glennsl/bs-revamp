@@ -28,6 +28,10 @@ let _reset re => {
 
 module Result = {
   type t = Js.Re.result;
+
+  let matches = Js.Re.matches;
+  let index = Js.Re.index;
+  let input = Js.Re.input;
 };
 
 module Compiled = {

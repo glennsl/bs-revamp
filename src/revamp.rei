@@ -5,6 +5,11 @@ type flags =
 
 module Result : {
   type t;
+
+  /* TODO: implement better API */  
+  let matches : t => array string;
+  let index : t => int;
+  let input : t => string;
 };
 
 module Compiled : {
