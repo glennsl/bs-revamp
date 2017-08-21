@@ -58,18 +58,25 @@ let matches input re =>
   re |> exec input
      |> Sequence.map
           (fun result =>
-            Array.unsafe_get (result |> Js.Re.matches) 0);
+            Array.unsafe_get (result |> Js.Re.matches) 0
+          );
 
 let indices input re =>
   re |> exec input
-     |> Sequence.map Js.Re.index;
+     |> Sequence.map
+          (fun result => {
+            let index = Js.Re.index result;
+            let match_ = Array.unsafe_get (Js.Re.matches result) 0;
+            (index, index + Js.String.length match_)
+          });
 
 let captures input re =>
   re |> exec input
      |> Sequence.map
           (fun result =>
             result |> Js.Re.matches
-                   |> Js.Array.sliceFrom 1);
+                   |> Js.Array.sliceFrom 1
+          );
 
 let test input re => {
   _assertValid re;
@@ -85,32 +92,27 @@ let find input re => {
   | Some result =>
     _reset re;
     let matches = Js.Re.matches result;
+    Some matches.(0)
+  }
+};
+
+let findIndex input re => {
+  _assertValid re;
+  switch (re |> Js.Re.exec input) {
+  | None => None
+  | Some result =>
+    _reset re;
+    let matches = Js.Re.matches result;
     let index = Js.Re.index result;
-    Some (matches.(0), index, matches)
+    Some (index, index + (Js.String.length matches.(0)))
   }
 };
 
 let count input re =>
   exec input re |> Sequence.count;
-/*
+
 let replace f input re =>
   _replace re f input;
 
 let split input re =>
-  Js.Re.splitByRe
-
-let map f input re => {
-  let rec loop acc => {
-    switch (re |> Js.Re.exec input) {
-    | None => acc
-    | Some result =>
-      let matches = Js.Re.matches result;
-      let index = Js.Re.index result;
-      loop [(f matches.(0) index matches), ...acc]
-    }
-  };
-  loop []
-};
-
-let filterMap input re =>
-*/
+  Js.String.splitByRe re input
