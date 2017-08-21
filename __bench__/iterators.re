@@ -1,4 +1,6 @@
-let re = Revamp.Compiled.make "(na)+";
+external _setLastIndex : Js.Re.t => int => unit = "lastIndex" [@@bs.set];
+
+let re = [%re "/(na)+/g"];
 
 module Seq = {
   open Sequence;
@@ -20,12 +22,12 @@ module Seq = {
 
   let exec input re => {
     let rec next start () => {
-      Revamp._setLastIndex re start;
+      _setLastIndex re start;
       switch (re |> Js.Re.exec input) {
         | None => Nil
         | Some result => {
           let nextIndex = Js.Re.lastIndex re;
-          Revamp._setLastIndex re 0;
+          _setLastIndex re 0;
           Cons result (next nextIndex)
         }
       }
@@ -46,12 +48,12 @@ module Gen = {
   let exec input re => {
     let nextIndex = ref 0;
     fun () => {
-      Revamp._setLastIndex re !nextIndex;
+      _setLastIndex re !nextIndex;
       switch (re |> Js.Re.exec input) {
         | None => None
         | Some result => {
           nextIndex := Js.Re.lastIndex re;
-          Revamp._setLastIndex re 0;
+          _setLastIndex re 0;
           Some result
         }
       }
@@ -86,7 +88,7 @@ let run () => Benchmark.(
       switch (re |> Js.Re.exec "bananas") {
       | None => break := true
       | Some result =>
-        let _ = (Js.Re.matches result).(0);
+        let _: string = (Js.Re.matches result).(0);
       }
     }
   })
