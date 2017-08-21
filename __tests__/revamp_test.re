@@ -83,10 +83,14 @@ describe "replace" (fun () => {
 
   test "no match" (fun () => 
     expect (Revamp.replace pattern (fun _ => "foo") "apples and pears") |> toEqual "apples and pears");
+});
 
-  test "capture" (fun () => 
-    expect (Revamp.replace pattern (fun _ => "[$1]") "mangos and bananas") |> toEqual "mfooos and bfoos");
+describe "replaceByString" (fun () => {
+  test "match" (fun () => 
+    expect (Revamp.replaceByString pattern "[$1]" "mangos and bananas") |> toEqual "m[an]os and b[an]s");
 
+  test "no match" (fun () => 
+    expect (Revamp.replaceByString pattern "[$1]" "apples and pears") |> toEqual "apples and pears");
 });
 
 describe "split" (fun () => {

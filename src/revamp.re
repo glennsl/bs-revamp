@@ -114,6 +114,9 @@ module Compiled = {
   let replace re f input =>
     _replace re f input;
 
+  let replaceByString re replacement input =>
+    Js.String.replaceByRe re replacement input;
+
   let split re input =>
     Js.String.splitByRe re input
 
@@ -145,6 +148,9 @@ let count pattern ::flags=[] input =>
 
 let replace pattern ::flags=[] f input =>
   Compiled.replace (Compiled.make ::flags pattern) f input;
+
+let replaceByString pattern ::flags=[] replacement input =>
+  Compiled.replaceByString (Compiled.make ::flags pattern) replacement input;
 
 let split pattern ::flags=[] input =>
   Compiled.split (Compiled.make ::flags pattern) input;
