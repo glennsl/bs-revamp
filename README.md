@@ -8,7 +8,7 @@ An experimental safe and functional API for JavaScript regexes
 ```reason
 let () =
   "baNAna" |> Revamp.matches "(na)+" flags::[Revamp.IgnoreCase]
-           |> Sequence.forEach (fun m _ _ => Js.log m);
+           |> Sequence.forEach (fun m => Js.log m);
 ```
 
 ## Goals
