@@ -3,3 +3,4 @@ lib/*
 !lib/js
 node_modules
 .merlin
+.bsb.lock
