@@ -9,10 +9,20 @@
     "test:watch": "jest --watchAll",
     "bench": "npm run build && node lib/js/__bench__/bench.js"
   },
+  "homepage": "https://github.com/glennsl/bs-revamp#readme",
+  "bugs": "https://github.com/glennsl/bs-revamp/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glennsl/bs-revamp.git"
+  },
   "keywords": [
-    "BuckleScript"
+    "reason",
+    "bucklescript",
+    "regex",
+    "regular expressions"
   ],
   "license": "MIT",
+  "author": "glennsl",
   "devDependencies": {
     "bs-platform": "1.8.3",
     "bs-jest": "^0.1.0",
