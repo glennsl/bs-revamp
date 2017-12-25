@@ -1,6 +1,7 @@
 {
   "name": "bs-revamp",
   "version": "0.1.0",
+  "description": "A safe and functional API for JavaScript regexes",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
