@@ -25,7 +25,7 @@
   "license": "MIT",
   "author": "glennsl",
   "devDependencies": {
-    "bs-platform": "1.8.3",
+    "bs-platform": "^2.1.0",
     "bs-jest": "^0.1.0",
     "bs-loader": "^1.5.12",
     "bs-benchmarkjs": "glennsl/bs-benchmarkjs"

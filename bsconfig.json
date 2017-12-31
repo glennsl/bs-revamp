@@ -1,5 +1,6 @@
 {
   "name": "bs-revamp",
+  "bsc-flags": ["-bs-no-version-header", "-bs-super-errors"],
   "version": "0.1.0",
   "sources": [
     "src", {
@@ -13,5 +14,6 @@
       "type": "dev"
     }
   ],
-  "bs-dev-dependencies" : ["bs-jest", "bs-benchmarkjs"]
+  "bs-dev-dependencies" : ["bs-jest", "bs-benchmarkjs"],
+  "refmt": 3
 }

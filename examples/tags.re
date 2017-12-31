@@ -9,8 +9,7 @@ let input = {|
     </body>
   </html>
 |};
-  
+
 let () =
-  input |> Revamp.matches "<p\\b[^>]*>(.*?)<\\/p>" flags::[Revamp.IgnoreCase]
-        |> Sequence.forEach Js.log;
-  
+  input |> Revamp.matches("<p\\b[^>]*>(.*?)<\\/p>", ~flags=[Revamp.IgnoreCase])
+        |> Sequence.forEach(Js.log);

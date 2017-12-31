@@ -1,16 +1,16 @@
 open Jest;
 open Expect;
 
-let seq = Sequence.(fun () => Cons 876 (fun () => Cons 564 (fun () => Nil)));
+let seq = Sequence.(() => Cons(876, () => Cons(564, () => Nil)));
 
 let () =
 
-describe "forEach" (fun () => {
-  test "..." (fun () => {
+describe("forEach", () =>
+  test("...", () => {
     let results = [||];
 
-    Sequence.forEach (fun elt => Js.Array.push elt results) seq;
+    Sequence.forEach(elt => Js.Array.push(elt, results), seq);
 
-    expect results |> toEqual [|876, 564|]
-  });
-});
+    expect(results) |> toEqual([|876, 564|]);
+  })
+);
