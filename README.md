@@ -3,6 +3,10 @@
 
 An experimental safe and functional API for JavaScript regexes
 
+[![Dependencies](https://img.shields.io/david/glennsl/bs-revamp.svg)]()
+[![Issues](https://img.shields.io/github/issues/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/glennsl/bs-revamp.svg)]()
+
 ## Example
 
 ```reason
