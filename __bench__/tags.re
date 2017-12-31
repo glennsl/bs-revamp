@@ -15,11 +15,11 @@ let () =
     makeSuite("tags")
     |> add("Sequence", () =>
          input |> Revamp.matches("<p\\b[^>]*>(.*?)<\\/p>", ~flags=[Revamp.IgnoreCase])
-               |> Sequence.forEach(ignore)
+               |> Rebase.Seq.forEach(ignore)
        )
     |> add("Array", () =>
          input |> Js.String.match([%re "/<p\\b[^>]*>(.*?)<\\/p>/gi"])
-                |> fun | Some(result) => result |> Array.iter(ignore)
+                |> fun | Some(result) => result |> Js.Array.forEach(ignore)
                        | None => ()
        )
     |> on("cycle", event => Js.log(Js.String.make(event##target)))

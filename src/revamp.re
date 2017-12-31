@@ -1,15 +1,18 @@
+open Rebase;
+
 [@bs.set] external _setLastIndex : (Js.Re.t, int) => unit = "lastIndex";
 [@bs.send.pipe : string] external _replace : (Js.Re.t, string => string) => string = "replace";
 
 let _captures = result =>
   result |> Js.Re.captures
-         |> Array.to_list
+         |> List.fromArray
          |> List.map(Js.toOption)
-         |> List.tl;
+         |> List.tail
+         |> Option.getOrRaise;
 
 let _match = result =>
   result |> Js.Re.captures
-         |> arr => Array.unsafe_get(arr, 0)
+         |> array => Array.unsafeGetUnchecked(0, array)
          |> Obj.magic;
 
 
@@ -53,7 +56,7 @@ module Compiled = {
   let make = (~flags=[], pattern) => {
     let flags =
       flags |> List.map(_flagToString)
-            |> List.fold_left((acc, flag) => acc ++ flag, "g");
+            |> List.reduce((acc, flag) => acc ++ flag, "g");
 
     Js.Re.fromStringWithFlags(pattern, ~flags=flags);
   };
@@ -63,11 +66,11 @@ module Compiled = {
     let rec next = start => () => {
       _setLastIndex(re, start);
       switch (re |> Js.Re.exec(input)) {
-      | None => Sequence.Nil
+      | None => Nil
       | Some(result) =>
         let nextIndex = Js.Re.lastIndex(re);
         _reset(re);
-        Sequence.Cons(result, next(nextIndex));
+        Cons(result, next(nextIndex));
       };
     };
     next(0);
@@ -75,11 +78,11 @@ module Compiled = {
 
   let matches = (re, input) =>
     input |> exec(re)
-          |> Sequence.map(_match);
+          |> Seq.map(_match);
 
   let indices = (re, input) =>
     input |> exec(re)
-          |> Sequence.map(
+          |> Seq.map(
                result => {
                  let index = Js.Re.index(result);
                  (index, index + Js.String.length(_match(result)));
@@ -88,7 +91,7 @@ module Compiled = {
 
   let captures = (re, input) =>
     input |> exec(re)
-          |> Sequence.map(_captures);
+          |> Seq.map(_captures);
 
   let test = (re, input) => {
     _assertValid(re);
@@ -120,7 +123,7 @@ module Compiled = {
 
   let count = (re, input) =>
     input |> exec(re)
-          |> Sequence.count;
+          |> Seq.count;
 
   let replace = (re, f, input) =>
     _replace(re, f, input);

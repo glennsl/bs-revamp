@@ -14,6 +14,7 @@
       "type": "dev"
     }
   ],
+  "bs-dependencies": ["@glennsl/rebase"],
   "bs-dev-dependencies" : ["bs-jest", "bs-benchmarkjs"],
   "refmt": 3
 }

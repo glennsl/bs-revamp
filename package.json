@@ -42,5 +42,8 @@
     "transform": {
       ".(re|ml)": "bs-loader"
     }
+  },
+  "dependencies": {
+    "@glennsl/rebase": "^0.2.0"
   }
 }

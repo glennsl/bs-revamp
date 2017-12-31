@@ -1,3 +1,4 @@
+open Rebase;
 open Jest;
 open Expect;
 
@@ -12,7 +13,7 @@ describe("compile", () => {
 describe("matches", () => {
   let run = input =>
     input |> Revamp.matches(pattern)
-          |> Sequence.toList;
+          |> List.fromSeq;
 
   test("match", () =>
     expect(run("mangos and bananas")) |> toEqual(["ang", "anana"]));
@@ -24,7 +25,7 @@ describe("matches", () => {
 describe("indices", () => {
   let run = input =>
     input |> Revamp.indices(pattern)
-          |> Sequence.toList;
+          |> List.fromSeq;
 
   test("match", () =>
     expect(run("mangos and bananas")) |> toEqual([(1, 4), (12, 17)]));
@@ -36,7 +37,7 @@ describe("indices", () => {
 describe("captures", () => {
   let run = input =>
     input |> Revamp.captures(pattern)
-          |> Sequence.toList;
+          |> List.fromSeq;
 
   test("match", () =>
     expect(run("mangos and bananas")) |> toEqual([[Some("an"), Some("g")], [Some("an"), Some("a")]]));
@@ -47,7 +48,7 @@ describe("captures", () => {
   test("match - empty capture", () =>
     expect(
       "3-" |> Revamp.captures("(.)-(.)?")
-           |> Sequence.toList)
+           |> List.fromSeq)
       |> toEqual([[Some("3"), None]]));
 });
 

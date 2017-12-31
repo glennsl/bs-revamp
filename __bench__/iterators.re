@@ -3,7 +3,7 @@
 let re = [%re "/(na)+/g"];
 
 module Seq = {
-  open Sequence;
+  open Rebase;
 
   let rec forEach = (f, seq) =>
     switch (seq()) {
@@ -35,7 +35,7 @@ module Seq = {
 
   let matches = (input, re) =>
     re |> exec(input)
-       |> map(result => Array.unsafe_get(result |> Js.Re.matches, 0));
+       |> map(result => Array.unsafeGetUnchecked(0, result |> Js.Re.matches));
 };
 
 module Gen = {

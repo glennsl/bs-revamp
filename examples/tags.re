@@ -12,4 +12,4 @@ let input = {|
 
 let () =
   input |> Revamp.matches("<p\\b[^>]*>(.*?)<\\/p>", ~flags=[Revamp.IgnoreCase])
-        |> Sequence.forEach(Js.log);
+        |> Rebase.Seq.forEach(Js.log);
