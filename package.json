@@ -27,21 +27,7 @@
   "devDependencies": {
     "bs-platform": "^2.1.0",
     "bs-jest": "^0.1.0",
-    "bs-loader": "^1.5.12",
     "bs-benchmarkjs": "glennsl/bs-benchmarkjs"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "re",
-      "js",
-      "ml"
-    ],
-    "testMatch": [
-      "**/__tests__/*_test.re"
-    ],
-    "transform": {
-      ".(re|ml)": "bs-loader"
-    }
   },
   "dependencies": {
     "@glennsl/rebase": "^0.2.0"
