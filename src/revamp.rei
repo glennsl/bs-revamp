@@ -6,8 +6,11 @@ type flags =
 module Match: {
   type t;
   
-  /* TODO: implement better API */
+  [@deprecated "This API is not sound. Use match and captures instead"]
   let matches: t => array(string);
+
+  let match: t => string;
+  let captures: t => list(option(string));
   let index: t => int;
   let input: t => string;
 };
@@ -19,7 +22,7 @@ module Compiled: {
   let exec: (t, string) => Sequence.t(Match.t);
   let matches: (t, string) => Sequence.t(string);
   let indices: (t, string) => Sequence.t((int, int));
-  let captures: (t, string) => Sequence.t(array(string)); /* TODO: should be list string? */
+  let captures: (t, string) => Sequence.t(list(option(string)));
   let test: (t, string) => bool;
   let find: (t, string) => option(string);
   let findIndex: (t, string) => option((int, int));
@@ -32,7 +35,7 @@ module Compiled: {
 let exec: (string, ~flags: list(flags)=?, string) => Sequence.t(Match.t);
 let matches: (string, ~flags: list(flags)=?, string) => Sequence.t(string);
 let indices: (string, ~flags: list(flags)=?, string) => Sequence.t((int, int));
-let captures: (string, ~flags: list(flags)=?, string) => Sequence.t(array(string));
+let captures: (string, ~flags: list(flags)=?, string) => Sequence.t(list(option(string)));
 let test: (string, ~flags: list(flags)=?, string) => bool;
 let find: (string, ~flags: list(flags)=?, string) => option(string);
 let findIndex: (string, ~flags: list(flags)=?, string) => option((int, int));

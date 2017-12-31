@@ -1,6 +1,18 @@
 [@bs.set] external _setLastIndex : (Js.Re.t, int) => unit = "lastIndex";
 [@bs.send.pipe : string] external _replace : (Js.Re.t, string => string) => string = "replace";
 
+let _captures = result =>
+  result |> Js.Re.captures
+         |> Array.to_list
+         |> List.map(Js.toOption)
+         |> List.tl;
+
+let _match = result =>
+  result |> Js.Re.captures
+         |> arr => Array.unsafe_get(arr, 0)
+         |> Obj.magic;
+
+
 type flags =
   | IgnoreCase
   | MultiLine
@@ -28,6 +40,9 @@ module Match = {
   type t = Js.Re.result;
 
   let matches = Js.Re.matches;
+  
+  let match = _match;
+  let captures = _captures;
   let index = Js.Re.index;
   let input = Js.Re.input;
 };
@@ -60,26 +75,20 @@ module Compiled = {
 
   let matches = (re, input) =>
     input |> exec(re)
-          |> Sequence.map(
-               result => Array.unsafe_get(result |> Js.Re.matches, 0)
-             );
+          |> Sequence.map(_match);
 
   let indices = (re, input) =>
     input |> exec(re)
           |> Sequence.map(
                result => {
                  let index = Js.Re.index(result);
-                 let match = Array.unsafe_get(Js.Re.matches(result), 0);
-                 (index, index + Js.String.length(match));
+                 (index, index + Js.String.length(_match(result)));
                }
              );
 
   let captures = (re, input) =>
     input |> exec(re)
-          |> Sequence.map(
-               result => result |> Js.Re.matches
-                                |> Js.Array.sliceFrom(1)
-             );
+          |> Sequence.map(_captures);
 
   let test = (re, input) => {
     _assertValid(re);
@@ -94,8 +103,7 @@ module Compiled = {
     | None => None
     | Some(result) =>
       _reset(re);
-      let matches = Js.Re.matches(result);
-      Some(matches[0]);
+      Some(_match(result));
     };
   };
 
@@ -105,9 +113,8 @@ module Compiled = {
     | None => None
     | Some(result) =>
       _reset(re);
-      let matches = Js.Re.matches(result);
       let index = Js.Re.index(result);
-      Some((index, index + Js.String.length(matches[0])));
+      Some((index, index + Js.String.length(_match(result))));
     };
   };
 

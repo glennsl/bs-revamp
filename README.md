@@ -20,3 +20,9 @@ let () =
 
 * Full feature parity
 
+## Changes
+
+### Next
+* Changed type of `captures` from `Sequence.t(array(string))` to `Sequence.t(list(option(string)))` because the former was unsound.
+* Added `Match.match` and `Match.captures`
+* Deprecated `Match.matches` due to being unsound

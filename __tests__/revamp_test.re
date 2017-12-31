@@ -39,10 +39,16 @@ describe("captures", () => {
           |> Sequence.toList;
 
   test("match", () =>
-    expect(run("mangos and bananas")) |> toEqual([[|"an", "g"|], [|"an", "a"|]]));
+    expect(run("mangos and bananas")) |> toEqual([[Some("an"), Some("g")], [Some("an"), Some("a")]]));
 
   test("no match", () =>
     expect(run("apples and pears")) |> toEqual([]));
+
+  test("match - empty capture", () =>
+    expect(
+      "3-" |> Revamp.captures("(.)-(.)?")
+           |> Sequence.toList)
+      |> toEqual([[Some("3"), None]]));
 });
 
 describe("test", () => {
