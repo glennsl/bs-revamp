@@ -10,6 +10,5 @@ let input = {|
   </html>
 |};
 
-let () =
-  input |> Revamp.matches("<p\\b[^>]*>(.*?)<\\/p>", ~flags=[Revamp.IgnoreCase])
-        |> Rebase.Seq.forEach(Js.log);
+input |> Revamp.matches("<p\\b[^>]*>(.*?)<\\/p>", ~flags=[Revamp.IgnoreCase])
+      |> Rebase.Seq.forEach(Js.log);
