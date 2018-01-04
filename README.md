@@ -3,9 +3,9 @@
 
 An experimental safe and functional API for JavaScript regexes
 
-[![Dependencies](https://img.shields.io/david/glennsl/bs-revamp.svg)]()
+[![Dependencies](https://img.shields.io/david/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/network/dependencies)
 [![Issues](https://img.shields.io/github/issues/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/glennsl/bs-revamp.svg)]()
+[![Last Commit](https://img.shields.io/github/last-commit/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/commits/master)
 
 ## Example
 
@@ -40,8 +40,7 @@ code |> Revamp.replace({|"([^"]+)"|},                /* Matches the content of s
  * Dasherize camelCased identifiers inside string literals
  *)
 
-let code =
-  {|
+let code = {|
   let borderLeftColor = "borderLeftColor";
   let borderRightColor = "borderRightColor";
 |}
@@ -67,6 +66,10 @@ let () =
 ## Non-goals
 
 * Full feature parity
+
+## Documentation
+
+For the moment, please see the interface file, [Revamp.rei](https://github.com/glennsl/bs-revamp/blob/master/src/Revamp.rei).
 
 ## Changes
 
