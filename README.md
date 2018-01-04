@@ -65,14 +65,14 @@ let () =
 ## Installation
 
 ```sh
-npm install --save glennsl/bs-revamp
+npm install --save @glennsl/bs-revamp
 ```
 
-Then add `bs-revamp` to `bs-dependencies` in your `bsconfig.json`:
+Then add `@glennsl/bs-revamp` to `bs-dependencies` in your `bsconfig.json`:
 ```js
 {
   ...
-  "bs-dependencies": ["bs-revamp"]
+  "bs-dependencies": ["@glennsl/bs-revamp"]
 }
 ```
 
@@ -91,7 +91,7 @@ For the moment, please see the interface file, [Revamp.rei](https://github.com/g
 
 ## Changes
 
-### Next
+### 0.1.0
 * Changed type of `captures` from `Sequence.t(array(string))` to `Sequence.t(list(option(string)))` because the former was unsound.
 * Added `Match.match` and `Match.captures`
 * Deprecated `Match.matches` due to being unsound
