@@ -3,9 +3,13 @@
 
 An experimental safe and functional API for JavaScript regexes
 
+[![npm](https://img.shields.io/npm/v/@glennsl/bs-revamp.svg)](https://npmjs.org/@glennsl/bs-revamp)
+[![Travis](https://img.shields.io/travis/glennsl/bs-revamp/master.svg)](https://travis-ci.org/glennsl/bs-revamp)
+[![Coveralls](https://img.shields.io/coveralls/glennsl/bs-revamp/master.svg)](https://coveralls.io/github/glennsl/bs-revamp?branch=master)
 [![Dependencies](https://img.shields.io/david/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/network/dependencies)
 [![Issues](https://img.shields.io/github/issues/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/glennsl/bs-revamp.svg)](https://github.com/glennsl/bs-revamp/commits/master)
+[![Size](https://img.shields.io/github/size/glennsl/bs-revamp/lib/js/src/Revamp.js.svg)](https://github.com/glennsl/bs-revamp/blob/master/lib/js/src/Revamp.js)
 
 ## Example
 
