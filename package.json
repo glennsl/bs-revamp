@@ -25,6 +25,10 @@
   ],
   "license": "MIT",
   "author": "glennsl",
+  "files": [
+    "src/",
+    "bsconfig.json"
+  ],
   "devDependencies": {
     "bs-benchmarkjs": "glennsl/bs-benchmarkjs",
     "bs-jest": "^0.3.1",
