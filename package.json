@@ -6,7 +6,8 @@
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
-    "test": "npm run build 6& jest",
+    "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
+    "test": "npm run build && jest --coverage && npm run coverage && npm run test:examples",
     "watch:jest": "jest --coverage --watchAll",
     "bench": "npm run build && node lib/js/__bench__/bench.js"
   },
@@ -25,9 +26,11 @@
   "license": "MIT",
   "author": "glennsl",
   "devDependencies": {
-    "bs-platform": "^2.1.0",
+    "bs-benchmarkjs": "glennsl/bs-benchmarkjs",
     "bs-jest": "^0.3.1",
-    "bs-benchmarkjs": "glennsl/bs-benchmarkjs"
+    "bs-platform": "^2.1.0",
+    "coveralls": "^3.0.0",
+    "nyc": "^11.4.1"
   },
   "dependencies": {
     "@glennsl/rebase": "^0.2.0"
