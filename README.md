@@ -58,6 +58,20 @@ let () =
 *)
 ```
 
+## Installation
+
+```sh
+npm install --save glennsl/bs-revamp
+```
+
+Then add `bs-revamp` to `bs-dependencies` in your `bsconfig.json`:
+```js
+{
+  ...
+  "bs-dependencies": ["bs-revamp"]
+}
+```
+
 ## Goals
 
 * A sane, safe API
