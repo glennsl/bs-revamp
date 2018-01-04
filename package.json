@@ -7,7 +7,7 @@
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "test": "npm run build 6& jest",
-    "watch:jest": "jest --watchAll",
+    "watch:jest": "jest --coverage --watchAll",
     "bench": "npm run build && node lib/js/__bench__/bench.js"
   },
   "homepage": "https://github.com/glennsl/bs-revamp#readme",
