@@ -1,5 +1,5 @@
 {
-  "name": "bs-revamp",
+  "name": "@glennsl/bs-revamp",
   "version": "0.1.0",
   "description": "A safe and functional API for JavaScript regexes",
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
-    "test": "npm run build && jest --coverage && npm run coverage && npm run test:examples",
+    "test": "npm run build && jest --coverage && npm run coverage",
     "watch:jest": "jest --coverage --watchAll",
     "bench": "npm run build && node lib/js/__bench__/bench.js"
   },

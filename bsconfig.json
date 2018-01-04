@@ -1,5 +1,5 @@
 {
-  "name": "bs-revamp",
+  "name": "@glennsl/bs-revamp",
   "bsc-flags": ["-bs-no-version-header", "-bs-super-errors"],
   "version": "0.1.0",
   "sources": [
