@@ -15,8 +15,6 @@ An experimental safe and functional API for JavaScript regexes
 
 ```reason
 /*
- * Reason
- *
  * Dasherize camelCased identifiers inside string literals
  */
 
