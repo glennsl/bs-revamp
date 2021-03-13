@@ -7,9 +7,9 @@ type flags =
 
 module Match: {
   type t;
-  
+
   [@deprecated "This API is not sound. Use match and captures instead"]
-  let matches: t => array(string);
+  let matches: t => array(Js.nullable(string));
 
   let match: t => string;
   let captures: t => list(option(string));
@@ -31,7 +31,7 @@ module Compiled: {
   let count: (t, string) => int;
   let replace: (t, string => string, string) => string;
   let replaceByString: (t, string, string) => string; /* TODO: better name? */
-  let split: (t, string) => array(string); /* TODO: should be list string? */
+  let split: (t, Js.String.t) => array(option(Js.String.t)); /* TODO: should be list string? */
 };
 
 let exec: (string, ~flags: list(flags)=?, string) => seq(Match.t);
@@ -44,4 +44,5 @@ let findIndex: (string, ~flags: list(flags)=?, string) => option((int, int));
 let count: (string, ~flags: list(flags)=?, string) => int;
 let replace: (string, ~flags: list(flags)=?, string => string, string) => string;
 let replaceByString: (string, ~flags: list(flags)=?, string, string) => string;
-let split: (string, ~flags: list(flags)=?, string) => array(string);
+let split: (string, ~flags: Rebase.List.t(flags)=?, Js.String.t) =>
+           array(option(Js.String.t));

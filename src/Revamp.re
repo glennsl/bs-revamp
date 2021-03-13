@@ -42,8 +42,8 @@ let _reset = re =>
 module Match = {
   type t = Js.Re.result;
 
-  let matches = Js.Re.matches;
-  
+  let matches = Js.Re.captures;
+
   let match = _match;
   let captures = _captures;
   let index = Js.Re.index;
@@ -60,12 +60,20 @@ module Compiled = {
 
     Js.Re.fromStringWithFlags(pattern, ~flags=flags);
   };
+  // let rec extract = (str, re, options) =>
+  //   switch re->Js.Re.exec_(str) {
+  //   | Some(r) =>
+  //     let captures =
+  //       r->Js.Re.captures->Belt.Array.map(Js.Nullable.toOption)->Belt.Array.keepMap(x => x)
 
+  //     extract(str, re, list{captures, ...options})
+  //   | None => options
+  //   }
   let exec = (re, input) => {
     _assertValid(re);
     let rec next = start => () => {
       _setLastIndex(re, start);
-      switch (re |> Js.Re.exec(input)) {
+      switch (re -> Js.Re.exec_(input)) {
       | None => Nil
       | Some(result) =>
         let nextIndex = Js.Re.lastIndex(re);
@@ -95,14 +103,14 @@ module Compiled = {
 
   let test = (re, input) => {
     _assertValid(re);
-    let res = Js.Re.test(input, re);
+    let res = re->Js.Re.test_(input);
     _reset(re);
     res
   };
 
   let find = (re, input) => {
     _assertValid(re);
-    switch (re |> Js.Re.exec(input)) {
+    switch (re -> Js.Re.exec_(input)) {
     | None => None
     | Some(result) =>
       _reset(re);
@@ -112,7 +120,7 @@ module Compiled = {
 
   let findIndex = (re, input) => {
     _assertValid(re);
-    switch (re |> Js.Re.exec(input)) {
+    switch (re -> Js.Re.exec_(input)) {
     | None => None
     | Some(result) =>
       _reset(re);
