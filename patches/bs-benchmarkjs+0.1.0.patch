@@ -12,29 +12,206 @@ index 0000000..a4380c6
 +S src
 +B lib/bs/src
 +####BSB GENERATED: NO EDIT}
-diff --git a/node_modules/bs-benchmarkjs/src/benchmark.ml b/node_modules/bs-benchmarkjs/src/benchmark.ml
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/.bsbuild b/node_modules/bs-benchmarkjs/lib/bs/.bsbuild
+new file mode 100644
+index 0000000..58c52b6
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/.bsbuild differ
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/.bsdeps b/node_modules/bs-benchmarkjs/lib/bs/.bsdeps
+new file mode 100644
+index 0000000..670736f
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/bs/.bsdeps
+@@ -0,0 +1,5 @@
++9.0.2
++/Volumes/SSD/Github/bs-revamp/node_modules/bs-benchmarkjs
++1
++bsconfig.json	0x1.8134439cp+30
++src	0x1.813443bcp+30
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/.compiler.log b/node_modules/bs-benchmarkjs/lib/bs/.compiler.log
+new file mode 100644
+index 0000000..c50c79e
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/bs/.compiler.log
+@@ -0,0 +1,2 @@
++#Start(1615663438466)
++#Done(1615663438538)
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/.ninja_log b/node_modules/bs-benchmarkjs/lib/bs/.ninja_log
+new file mode 100644
+index 0000000..5c68ae8
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/bs/.ninja_log
+@@ -0,0 +1,7 @@
++# ninja log v6
++0	20	1615663438000000000	src/benchmark.ast	60bccaee4191d436
++2	20	1615663438000000000	src/benchmark.iast	bd4cee14928c1b71
++20	31	1615663438000000000	src/benchmark.d	e76a4f4905cd1843
++31	55	1615663438000000000	src/benchmark.cmi	575c5111e90b5469
++55	71	1615663438000000000	src/benchmark.cmj	66aa8eb8fcf26e27
++55	71	1615663438000000000	../js/src/benchmark.js	66aa8eb8fcf26e27
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/build.ninja b/node_modules/bs-benchmarkjs/lib/bs/build.ninja
+new file mode 100644
+index 0000000..340dcdd
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/bs/build.ninja
+@@ -0,0 +1,19 @@
++rescript = 1
++rule ast
++  command = /Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/darwin/bsc.exe  -w a -bs-v 9.0.2  -absname -bs-ast -o $out $i
++o src/benchmark.ast : ast ../../src/benchmark.ml
++rule deps
++  command = /Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/darwin/bsb_helper.exe -hash 6db6683dcddf833238f094ed778b92ca $in
++  restat = 1
++o src/benchmark.d : deps src/benchmark.ast src/benchmark.iast
++o src/benchmark.iast : ast ../../src/benchmark.mli
++rule mi
++  command = /Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/darwin/bsc.exe -I src   -w a $i
++  dyndep = 1
++  restat = 1
++o src/benchmark.cmi : mi src/benchmark.iast
++rule mj
++  command = /Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/darwin/bsc.exe -bs-read-cmi -I src   -w a -bs-package-name bs-benchmarkjs -bs-package-output commonjs:lib/js/$in_d:.js $i
++  dyndep = 1
++  restat = 1
++o src/benchmark.cmj ../js/src/benchmark.js : mj src/benchmark.ast src/benchmark.cmi
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/install.ninja b/node_modules/bs-benchmarkjs/lib/bs/install.ninja
+new file mode 100644
+index 0000000..f7c4c87
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/bs/install.ninja
+@@ -0,0 +1,12 @@
++rescript = 1
++rule cp
++  command = cp $i $out
++rule touch
++ command = touch $out
++o benchmark.cmi : cp ../bs/src/benchmark.cmi
++o benchmark.cmj : cp ../bs/src/benchmark.cmj
++o benchmark.cmt : cp ../bs/src/benchmark.cmt
++o benchmark.ml : cp ../../src/benchmark.ml
++o benchmark.mli : cp ../../src/benchmark.mli
++o benchmark.cmti : cp ../bs/src/benchmark.cmti
++build install.stamp : touch benchmark.cmi benchmark.cmj 
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.ast b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.ast
+new file mode 100644
+index 0000000..0aebc9b
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.ast differ
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmi b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmi
+new file mode 100644
+index 0000000..a0c026f
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmi differ
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmj b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmj
+new file mode 100644
+index 0000000..3baa6ba
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmj differ
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmt b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmt
+new file mode 100644
+index 0000000..ea2000d
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmt differ
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmti b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmti
+new file mode 100644
+index 0000000..66a8711
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.cmti differ
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.d b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.d
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.iast b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.iast
+new file mode 100644
+index 0000000..ad6cb3f
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/bs/src/benchmark.iast differ
+diff --git a/node_modules/bs-benchmarkjs/lib/js/src/benchmark.js b/node_modules/bs-benchmarkjs/lib/js/src/benchmark.js
+new file mode 100644
+index 0000000..d856702
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/js/src/benchmark.js
+@@ -0,0 +1,2 @@
++// Generated by ReScript, PLEASE EDIT WITH CARE
++/* This output is empty. Its source's type definitions, externals and/or unused code got optimized away. */
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/.compiler.log b/node_modules/bs-benchmarkjs/lib/ocaml/.compiler.log
+new file mode 100644
+index 0000000..a3cff72
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/ocaml/.compiler.log
+@@ -0,0 +1,2 @@
++#Start(1615663438543)
++#Done(1615663438571)
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/.ninja_log b/node_modules/bs-benchmarkjs/lib/ocaml/.ninja_log
+new file mode 100644
+index 0000000..93ea864
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/ocaml/.ninja_log
+@@ -0,0 +1,8 @@
++# ninja log v6
++0	14	1615663438000000000	benchmark.cmi	1f8abafd905107e7
++1	14	1615663438000000000	benchmark.cmj	b79cf941b46ddc4c
++2	20	1615663438000000000	benchmark.cmt	e9c83f0edd68eb8f
++2	20	1615663438000000000	benchmark.ml	a97a9c80bf325fb
++3	21	1615663438000000000	benchmark.mli	9e4429493b7ea67e
++4	24	1615663438000000000	benchmark.cmti	d0b162cab6ed9cce
++14	28	1615663438000000000	install.stamp	cff5a5b4c02d30cf
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmi b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmi
+new file mode 100644
+index 0000000..a0c026f
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmi differ
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmj b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmj
+new file mode 100644
+index 0000000..3baa6ba
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmj differ
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmt b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmt
+new file mode 100644
+index 0000000..ea2000d
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmt differ
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmti b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmti
+new file mode 100644
+index 0000000..66a8711
+Binary files /dev/null and b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.cmti differ
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.ml b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.ml
 new file mode 100644
 index 0000000..8051e21
 --- /dev/null
-+++ b/node_modules/bs-benchmarkjs/src/benchmark.ml
++++ b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.ml
 @@ -0,0 +1,5 @@
 +type nonrec suite
 +external makeSuite : string -> suite = "Suite"[@@new ][@@module "benchmark"]
 +external add : string -> (unit -> unit) ->  suite = "suite"[@@bs.send.pipe:suite]
 +external on : string -> (< .. >  Js.t -> unit) ->  suite = "suite"[@@bs.send.pipe:suite]
 +external run : unit -> unit = "suite"[@@bs.send.pipe :suite]
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.mli b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.mli
+new file mode 100644
+index 0000000..f7912bd
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/lib/ocaml/benchmark.mli
+@@ -0,0 +1,6 @@
++type suite
++
++external makeSuite : string -> suite = "Suite" [@@bs.new] [@@bs.module "benchmark"]
++external add : string -> (unit -> unit) -> suite = "suite" [@@bs.send.pipe: suite]
++external on : string -> (< .. > Js.t -> unit) -> suite = "suite" [@@bs.send.pipe: suite]
++external run : unit -> unit = "suite" [@@bs.send.pipe: suite]
+diff --git a/node_modules/bs-benchmarkjs/lib/ocaml/install.stamp b/node_modules/bs-benchmarkjs/lib/ocaml/install.stamp
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/bs-benchmarkjs/src/benchmark.ml b/node_modules/bs-benchmarkjs/src/benchmark.ml
+new file mode 100644
+index 0000000..60ce1ea
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/src/benchmark.ml
+@@ -0,0 +1,5 @@
++type nonrec suite
++external makeSuite : string -> suite = "Suite"[@@new ][@@module "benchmark"]
++external add : string -> (unit -> unit) ->  suite = "add"[@@bs.send.pipe:suite]
++external on : string -> (< .. >  Js.t -> unit) ->  suite = "on"[@@bs.send.pipe:suite]
++external run : unit -> unit = "run"[@@bs.send.pipe :suite]
 diff --git a/node_modules/bs-benchmarkjs/src/benchmark.mli b/node_modules/bs-benchmarkjs/src/benchmark.mli
-index b3c9980..f7912bd 100644
+index b3c9980..44b6b9b 100644
 --- a/node_modules/bs-benchmarkjs/src/benchmark.mli
 +++ b/node_modules/bs-benchmarkjs/src/benchmark.mli
-@@ -1,7 +1,6 @@
--
+@@ -2,6 +2,6 @@
  type suite
  
  external makeSuite : string -> suite = "Suite" [@@bs.new] [@@bs.module "benchmark"]
 -external add : string -> (unit -> unit) -> suite = "" [@@bs.send.pipe: suite]
 -external on : string -> (< .. > Js.t -> unit) -> suite = "" [@@bs.send.pipe: suite]
 -external run : unit -> unit = "" [@@bs.send.pipe: suite]
-+external add : string -> (unit -> unit) -> suite = "suite" [@@bs.send.pipe: suite]
-+external on : string -> (< .. > Js.t -> unit) -> suite = "suite" [@@bs.send.pipe: suite]
-+external run : unit -> unit = "suite" [@@bs.send.pipe: suite]
++external add : string -> (unit -> unit) -> suite = "add" [@@bs.send.pipe: suite]
++external on : string -> (< .. > Js.t -> unit) -> suite = "on" [@@bs.send.pipe: suite]
++external run : unit -> unit = "run" [@@bs.send.pipe: suite]
