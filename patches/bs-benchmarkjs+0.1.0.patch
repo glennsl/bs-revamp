@@ -1,0 +1,40 @@
+diff --git a/node_modules/bs-benchmarkjs/.merlin b/node_modules/bs-benchmarkjs/.merlin
+new file mode 100644
+index 0000000..a4380c6
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/.merlin
+@@ -0,0 +1,8 @@
++####{BSB GENERATED: NO EDIT
++FLG -ppx '/Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/darwin/bsc.exe -as-ppx '
++S /Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/lib/ocaml
++B /Volumes/SSD/Github/bs-revamp/node_modules/bs-platform/lib/ocaml
++FLG -w +a-4-9-20-40-41-42-50-61-102
++S src
++B lib/bs/src
++####BSB GENERATED: NO EDIT}
+diff --git a/node_modules/bs-benchmarkjs/src/benchmark.ml b/node_modules/bs-benchmarkjs/src/benchmark.ml
+new file mode 100644
+index 0000000..8051e21
+--- /dev/null
++++ b/node_modules/bs-benchmarkjs/src/benchmark.ml
+@@ -0,0 +1,5 @@
++type nonrec suite
++external makeSuite : string -> suite = "Suite"[@@new ][@@module "benchmark"]
++external add : string -> (unit -> unit) ->  suite = "suite"[@@bs.send.pipe:suite]
++external on : string -> (< .. >  Js.t -> unit) ->  suite = "suite"[@@bs.send.pipe:suite]
++external run : unit -> unit = "suite"[@@bs.send.pipe :suite]
+diff --git a/node_modules/bs-benchmarkjs/src/benchmark.mli b/node_modules/bs-benchmarkjs/src/benchmark.mli
+index b3c9980..f7912bd 100644
+--- a/node_modules/bs-benchmarkjs/src/benchmark.mli
++++ b/node_modules/bs-benchmarkjs/src/benchmark.mli
+@@ -1,7 +1,6 @@
+-
+ type suite
+ 
+ external makeSuite : string -> suite = "Suite" [@@bs.new] [@@bs.module "benchmark"]
+-external add : string -> (unit -> unit) -> suite = "" [@@bs.send.pipe: suite]
+-external on : string -> (< .. > Js.t -> unit) -> suite = "" [@@bs.send.pipe: suite]
+-external run : unit -> unit = "" [@@bs.send.pipe: suite]
++external add : string -> (unit -> unit) -> suite = "suite" [@@bs.send.pipe: suite]
++external on : string -> (< .. > Js.t -> unit) -> suite = "suite" [@@bs.send.pipe: suite]
++external run : unit -> unit = "suite" [@@bs.send.pipe: suite]
