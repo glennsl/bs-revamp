@@ -84,14 +84,14 @@ let run = () =>
            switch (re->Js.Re.exec_("bananas")) {
            | None => break := true
            | Some(result) =>
-             let first: option(string) =
-               result
-               ->Js.Re.captures
-               ->Belt.Array.getExn(1)
-               ->Js.Nullable.toOption;
              // let _: string = Js.Re.matches(result)[0]
              let _: string =
-               switch (first) {
+               switch (
+                 result
+                 ->Js.Re.captures
+                 ->Belt.Array.getExn(1)
+                 ->Js.Nullable.toOption
+               ) {
                | Some(string) => string
                | None => ""
                };
