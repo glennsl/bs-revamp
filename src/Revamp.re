@@ -60,15 +60,7 @@ module Compiled = {
 
     Js.Re.fromStringWithFlags(pattern, ~flags=flags);
   };
-  // let rec extract = (str, re, options) =>
-  //   switch re->Js.Re.exec_(str) {
-  //   | Some(r) =>
-  //     let captures =
-  //       r->Js.Re.captures->Belt.Array.map(Js.Nullable.toOption)->Belt.Array.keepMap(x => x)
 
-  //     extract(str, re, list{captures, ...options})
-  //   | None => options
-  //   }
   let exec = (re, input) => {
     _assertValid(re);
     let rec next = start => () => {
