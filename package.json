@@ -9,7 +9,8 @@
     "coverage": "nyc report --temp-directory=coverage --reporter=text-lcov | coveralls",
     "test": "npm run build && jest --coverage && npm run coverage",
     "watch:jest": "jest --coverage --watchAll",
-    "bench": "npm run build && node lib/js/__bench__/bench.js"
+    "bench": "npm run build && node lib/js/__bench__/bench.js",
+    "postinstall": "patch-package"
   },
   "homepage": "https://github.com/glennsl/bs-revamp#readme",
   "bugs": "https://github.com/glennsl/bs-revamp/issues",
@@ -30,13 +31,14 @@
     "bsconfig.json"
   ],
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.6.0",
     "bs-benchmarkjs": "glennsl/bs-benchmarkjs",
-    "bs-jest": "^0.3.1",
-    "bs-platform": "^2.1.0",
-    "coveralls": "^3.0.0",
-    "nyc": "^11.4.1"
+    "bs-platform": "^9.0.2",
+    "coveralls": "^3.1.0",
+    "nyc": "^15.1.0",
+    "patch-package": "^6.4.7"
   },
   "dependencies": {
-    "@glennsl/rebase": "^0.2.0"
+    "@glennsl/rebase": "^0.2.1"
   }
 }
