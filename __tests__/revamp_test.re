@@ -39,7 +39,7 @@ let () =
       expect(() =>
         "" |> Revamp.Compiled.test([%re "/foo/"] |> Obj.magic)
       )
-      |> toThrowException(Invalid_argument(""))
+      |> toThrow
     );
 
     test(
@@ -51,7 +51,7 @@ let () =
       expect(() =>
         "" |> Revamp.Compiled.test(re |> Obj.magic)
       )
-      |> toThrowException(Invalid_argument(""));
+      |> toThrow
     });
 
     let re = Revamp.Compiled.make("(an)+([^d])");
@@ -153,28 +153,6 @@ let () =
 describe("Match", () => {
   open Rebase;
   open Expect;
-  // test("matches", () =>
-  // expect(
-  //   Revamp.exec("a(n?)", "banana") |> List.fromSeq
-  //                                  |> List.map(Revamp.Match.matches)
-  //                                  |> List.map(Js.Array.copy)) /* matches has some extra properties attached, so to be able to compare it we need to convert it into a normal array */
-  //   |> toEqual([[|"an", "n"|], [|"an", "n"|], [|"a", ""|]]));
-
-  test("matches", () =>
-    expect(
-      Revamp.exec("a(n?)", "banana")
-      |> List.fromSeq
-      |> List.map(Revamp.Match.captures)
-      |> List.map(Rebase.Array.fromList)
-      // |> List.map(Js.Array.copy)
-      //  |> Rebase.Array.copy
-    )  /* matches has some extra properties attached, so to be able to compare it we need to convert it into a normal array */
-    |> toEqual([
-         [|Some("an"), Some("n")|],
-         [|Some("an"), Some("n")|],
-         [|Some("a"), Some("")|],
-       ])
-  );
 
   test("match", () =>
     expect(

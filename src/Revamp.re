@@ -42,8 +42,6 @@ let _reset = re =>
 module Match = {
   type t = Js.Re.result;
 
-  let matches = Js.Re.captures;
-
   let match = _match;
   let captures = _captures;
   let index = Js.Re.index;
