@@ -28,7 +28,7 @@ module Compiled: {
   let count: (t, string) => int;
   let replace: (t, string => string, string) => string;
   let replaceByString: (t, string, string) => string; /* TODO: better name? */
-  let split: (t, Js.String.t) => array(option(Js.String.t)); /* TODO: should be list string? */
+  let split: (t, string) => array(option(string)); /* TODO: should be list string? */
 };
 
 let exec: (string, ~flags: list(flags)=?, string) => seq(Match.t);
