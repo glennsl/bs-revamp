@@ -41,5 +41,4 @@ let findIndex: (string, ~flags: list(flags)=?, string) => option((int, int));
 let count: (string, ~flags: list(flags)=?, string) => int;
 let replace: (string, ~flags: list(flags)=?, string => string, string) => string;
 let replaceByString: (string, ~flags: list(flags)=?, string, string) => string;
-let split: (string, ~flags: Rebase.List.t(flags)=?, Js.String.t) =>
-           array(option(Js.String.t));
+let split: (string, ~flags: list(flags)=?, string) => array(option(string));
