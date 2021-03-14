@@ -39,7 +39,7 @@ let () =
       expect(() =>
         "" |> Revamp.Compiled.test([%re "/foo/"] |> Obj.magic)
       )
-      |> toThrowException(Invalid_argument(""))
+      |> toThrow
     );
 
     test(
@@ -51,7 +51,7 @@ let () =
       expect(() =>
         "" |> Revamp.Compiled.test(re |> Obj.magic)
       )
-      |> toThrowException(Invalid_argument(""));
+      |> toThrow
     });
 
     let re = Revamp.Compiled.make("(an)+([^d])");

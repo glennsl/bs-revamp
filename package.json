@@ -30,7 +30,7 @@
     "bsconfig.json"
   ],
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.6.0",
+    "@glennsl/bs-jest": "^0.7.0",
     "bs-benchmarkjs": "glennsl/bs-benchmarkjs",
     "bs-platform": "^9.0.2",
     "coveralls": "^3.1.0",
