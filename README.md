@@ -64,6 +64,10 @@ For the moment, please see the interface file, [Revamp.rei](https://github.com/g
 
 ## Changes
 
+### Next
+
+- [BREAKING] Removed `Match.matches`, deprecated in 0.1.0, sue to being unsound
+
 ### 0.1.0
 * Changed type of `captures` from `Sequence.t(array(string))` to `Sequence.t(list(option(string)))` because the former was unsound.
 * Added `Match.match` and `Match.captures`
