@@ -2,7 +2,7 @@ open Rebase;
 
 [@bs.set] external _setLastIndex : (Js.Re.t, int) => unit = "lastIndex";
 [@bs.send.pipe : string] external _replace : (Js.Re.t, string => string) => string = "replace";
-
+[@bs.send.pipe: string] external _splitByRe: Js.Re.t => array(string) = "split";
 let _captures = result =>
   result |> Js.Re.captures
          |> List.fromArray
@@ -129,8 +129,7 @@ module Compiled = {
   let replaceByString = (re, replacement, input) =>
     Js.String.replaceByRe(re, replacement, input);
 
-  let split = (re, input) =>
-    Js.String.splitByRe(re, input);
+  let split = (re, input) => _splitByRe(re, input);
 };
 
 let exec = (pattern, ~flags=[], input) =>

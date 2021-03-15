@@ -28,7 +28,7 @@ module Compiled: {
   let count: (t, string) => int;
   let replace: (t, string => string, string) => string;
   let replaceByString: (t, string, string) => string; /* TODO: better name? */
-  let split: (t, string) => array(option(string)); /* TODO: should be list string? */
+  let split: (t, string) => array(string); /* TODO: should be list string? */
 };
 
 let exec: (string, ~flags: list(flags)=?, string) => seq(Match.t);
@@ -41,4 +41,4 @@ let findIndex: (string, ~flags: list(flags)=?, string) => option((int, int));
 let count: (string, ~flags: list(flags)=?, string) => int;
 let replace: (string, ~flags: list(flags)=?, string => string, string) => string;
 let replaceByString: (string, ~flags: list(flags)=?, string, string) => string;
-let split: (string, ~flags: list(flags)=?, string) => array(option(string));
+let split: (string, ~flags: list(flags)=?, string) => array(string);
