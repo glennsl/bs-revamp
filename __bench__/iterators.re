@@ -33,7 +33,7 @@ module Seq = {
     next(0);
   };
 
-  let matches = (input, re) =>
+  let captures = (input, re) =>
     re |> exec(input)
        |> map(result => Array.unsafeGetUnchecked(0, result |> Js.Re.captures));
 };
@@ -100,7 +100,7 @@ let run = () => Benchmark.(
          |> Seq.forEach(ignore)
      )
   |> add("Seq + map", () =>
-      re |> Seq.matches("bananas")
+      re |> Seq.captures("bananas")
          |> Seq.forEach(ignore)
      )
   |> add("Gen", () =>
