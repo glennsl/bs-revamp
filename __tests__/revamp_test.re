@@ -1,9 +1,9 @@
 open Jest;
-
+open Expect;
+open Rebase;
 let () =
   describe("Compiled", () => {
-    open Expect;
-    open Rebase;
+
     test("make - flags", () => {
       let result =
         {js|
@@ -135,24 +135,21 @@ let () =
       test("match", () =>
         expect(Revamp.Compiled.split(re, "bang bang bananabatman!"))
         |> toEqual([|
-             Some("bang"),
-             Some("bang"),
-             Some("bananabatman"),
-             Some(""),
+             "bang",
+             "bang",
+             "bananabatman",
+             "",
            |])
       );
-      // expect(Revamp.Compiled.split(re, "bang bang bananabatman!")) |> toEqual(([|"bang", "bang", "bananabatman", ""|])));
 
       test("no match", () =>
         expect(Revamp.Compiled.split(re, "apples"))
-        |> toEqual([|Some("apples")|])
+        |> toEqual([|"apples"|])
       );
     });
   });
 
 describe("Match", () => {
-  open Rebase;
-  open Expect;
 
   test("match", () =>
     expect(
@@ -201,8 +198,7 @@ describe("Match", () => {
 });
 
 describe("Uncompiled", () => {
-  open Rebase;
-  open Expect;
+
   let pattern = "(an)+([^d])";
 
   describe("exec", () => {
@@ -415,19 +411,18 @@ describe("Uncompiled", () => {
   });
 
   describe("split", () => {
-    // open Rebase;
     test("match", () =>
       expect(Revamp.split(" |!", "bang bang bananabatman!"))
       |> toEqual([|
-           Some("bang"),
-           Some("bang"),
-           Some("bananabatman"),
-           Some(""),
+           "bang",
+           "bang",
+           "bananabatman",
+           "",
          |])
     );
 
     test("no match", () =>
-      expect(Revamp.split(" |!", "apples")) |> toEqual([|Some("apples")|])
+      expect(Revamp.split(" |!", "apples")) |> toEqual([|"apples"|])
     );
 
     test("flags", () =>
@@ -435,10 +430,10 @@ describe("Uncompiled", () => {
         Revamp.split(" |!", ~flags=[IgnoreCase], "bang bang bananabatman!"),
       )
       |> toEqual([|
-           Some("bang"),
-           Some("bang"),
-           Some("bananabatman"),
-           Some(""),
+           "bang",
+           "bang",
+           "bananabatman",
+           "",
          |])
     );
   });
