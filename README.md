@@ -64,9 +64,9 @@ For the moment, please see the interface file, [Revamp.rei](https://github.com/g
 
 ## Changes
 
-### Next
+### 0.2.0
 
-- [BREAKING] Removed `Match.matches`, deprecated in 0.1.0, sue to being unsound
+- [BREAKING] Removed `Match.matches`, deprecated in 0.1.0, due to being unsound
 
 ### 0.1.0
 

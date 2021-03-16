@@ -17,18 +17,10 @@
     "type": "git",
     "url": "git+https://github.com/glennsl/bs-revamp.git"
   },
-  "keywords": [
-    "reason",
-    "bucklescript",
-    "regex",
-    "regular expressions"
-  ],
+  "keywords": ["reason", "bucklescript", "regex", "regular expressions"],
   "license": "MIT",
   "author": "glennsl",
-  "files": [
-    "src/",
-    "bsconfig.json"
-  ],
+  "files": ["src/", "bsconfig.json"],
   "devDependencies": {
     "@glennsl/bs-jest": "^0.7.0",
     "bs-benchmarkjs": "glennsl/bs-benchmarkjs",
