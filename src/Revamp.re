@@ -129,7 +129,7 @@ module Compiled = {
   let replaceByString = (re, replacement, input) =>
     Js.String.replaceByRe(re, replacement, input);
 
-  let split = (re, input) => _splitByRe(re, input);
+  let split = (re, input) => Js.String.splitByRe(re, input)->Belt.Array.keepMap(x => x);
 };
 
 let exec = (pattern, ~flags=[], input) =>
