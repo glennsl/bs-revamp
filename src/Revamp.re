@@ -2,7 +2,6 @@ open Rebase;
 
 [@bs.set] external _setLastIndex : (Js.Re.t, int) => unit = "lastIndex";
 [@bs.send.pipe : string] external _replace : (Js.Re.t, string => string) => string = "replace";
-[@bs.send.pipe: string] external _splitByRe: Js.Re.t => array(string) = "split";
 let _captures = result =>
   result |> Js.Re.captures
          |> List.fromArray
