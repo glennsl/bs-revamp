@@ -22,7 +22,7 @@ module Seq = {
   let exec = (input, re) => {
     let rec next = start => () => {
       _setLastIndex(re, start);
-      switch (re |> Js.Re.exec(input)) {
+      switch (re->Js.Re.exec_(input)) {
       | None => Nil
       | Some(result) =>
         let nextIndex = Js.Re.lastIndex(re);
@@ -33,9 +33,9 @@ module Seq = {
     next(0);
   };
 
-  let matches = (input, re) =>
+  let captures = (input, re) =>
     re |> exec(input)
-       |> map(result => Array.unsafeGetUnchecked(0, result |> Js.Re.matches));
+       |> map(result => Array.unsafeGetUnchecked(0, result |> Js.Re.captures));
 };
 
 module Gen = {
@@ -45,7 +45,7 @@ module Gen = {
     let nextIndex = ref(0);
     () => {
       _setLastIndex(re, nextIndex^);
-      switch (re |> Js.Re.exec(input)) {
+      switch (re->Js.Re.exec_(input)) {
       | None => None
       | Some(result) =>
         nextIndex := Js.Re.lastIndex(re);
@@ -66,7 +66,7 @@ module Gen = {
 
 module Internal = {
   let rec forEach = (f, input, re) =>
-    switch (re |> Js.Re.exec("bananas")) {
+    switch (re->Js.Re.exec_("bananas")) {
     | None => ()
     | Some(result) =>
       f(result);
@@ -79,19 +79,28 @@ let run = () => Benchmark.(
   |> add("Imperative (baseline)", () => {
       let break = ref(false);
       while (!break^) {
-        switch (re |> Js.Re.exec("bananas")) {
+        switch (re->Js.Re.exec_("bananas")) {
         | None => break := true
         | Some(result) =>
-          let _: string = Js.Re.matches(result)[0]
-        }
-      }
-    })
+          let _: string = switch (
+                 result
+                 ->Js.Re.captures
+                 ->Belt.Array.getExn(1)
+                 ->Js.Nullable.toOption
+               ) {
+               | Some(string) => string
+               | None => ""
+               };
+             ();
+           };
+         };
+       })
   |> add("Seq", () =>
       re |> Seq.exec("bananas")
          |> Seq.forEach(ignore)
      )
   |> add("Seq + map", () =>
-      re |> Seq.matches("bananas")
+      re |> Seq.captures("bananas")
          |> Seq.forEach(ignore)
      )
   |> add("Gen", () =>

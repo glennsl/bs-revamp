@@ -7,9 +7,6 @@ type flags =
 
 module Match: {
   type t;
-  
-  [@deprecated "This API is not sound. Use match and captures instead"]
-  let matches: t => array(string);
 
   let match: t => string;
   let captures: t => list(option(string));

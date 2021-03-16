@@ -2,7 +2,6 @@ open Rebase;
 
 [@bs.set] external _setLastIndex : (Js.Re.t, int) => unit = "lastIndex";
 [@bs.send.pipe : string] external _replace : (Js.Re.t, string => string) => string = "replace";
-
 let _captures = result =>
   result |> Js.Re.captures
          |> List.fromArray
@@ -42,8 +41,6 @@ let _reset = re =>
 module Match = {
   type t = Js.Re.result;
 
-  let matches = Js.Re.matches;
-  
   let match = _match;
   let captures = _captures;
   let index = Js.Re.index;
@@ -65,7 +62,7 @@ module Compiled = {
     _assertValid(re);
     let rec next = start => () => {
       _setLastIndex(re, start);
-      switch (re |> Js.Re.exec(input)) {
+      switch (re -> Js.Re.exec_(input)) {
       | None => Nil
       | Some(result) =>
         let nextIndex = Js.Re.lastIndex(re);
@@ -95,14 +92,14 @@ module Compiled = {
 
   let test = (re, input) => {
     _assertValid(re);
-    let res = Js.Re.test(input, re);
+    let res = re->Js.Re.test_(input);
     _reset(re);
     res
   };
 
   let find = (re, input) => {
     _assertValid(re);
-    switch (re |> Js.Re.exec(input)) {
+    switch (re -> Js.Re.exec_(input)) {
     | None => None
     | Some(result) =>
       _reset(re);
@@ -112,7 +109,7 @@ module Compiled = {
 
   let findIndex = (re, input) => {
     _assertValid(re);
-    switch (re |> Js.Re.exec(input)) {
+    switch (re -> Js.Re.exec_(input)) {
     | None => None
     | Some(result) =>
       _reset(re);
@@ -131,8 +128,7 @@ module Compiled = {
   let replaceByString = (re, replacement, input) =>
     Js.String.replaceByRe(re, replacement, input);
 
-  let split = (re, input) =>
-    Js.String.splitByRe(re, input);
+  let split = (re, input) => Js.String.splitByRe(re, input)->Belt.Array.keepMap(x => x);
 };
 
 let exec = (pattern, ~flags=[], input) =>
